@@ -1,5 +1,6 @@
 import Layout from '../../components/Layout';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 interface UsersProps {
   dataUsers: Array<any>;
@@ -7,14 +8,23 @@ interface UsersProps {
 
 export default function User(props: UsersProps) {
   const { dataUsers } = props;
+  const router = useRouter();
+
   return (
     <Layout>
       <Head>
         <title>Users - NextJS Basic Typescript</title>
       </Head>
-      <h1 className="inline-block text-lg">Users Page</h1>
+      <h1 className="mb-4 inline-block text-lg font-bold">Users Page</h1>
       {dataUsers.map(user => (
-        <h3 key={user.id}>{user.name}</h3>
+        <div
+          key={user.id}
+          onClick={() => router.push(`/users/${user.id}`)}
+          className="mb-2 cursor-pointer border-b"
+        >
+          <h3 className="font-semibold">{user.name}</h3>
+          <p className="text-sm lowercase">{user.email}</p>
+        </div>
       ))}
     </Layout>
   );
